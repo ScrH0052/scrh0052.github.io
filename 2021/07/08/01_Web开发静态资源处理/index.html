@@ -542,9 +542,9 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.webjars<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jquery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.4.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>导入完毕，查看webjars目录结构，并访问Jquery.js文件！</p>
-<p><img src="/2021/07/08/01_Web%E5%BC%80%E5%8F%91%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86/1.png" alt="1"></p>
+<p><img src="01_Web%E5%BC%80%E5%8F%91%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86/1.png" alt="1"></p>
 <p>访问：只要是静态资源，SpringBoot就会去对应的路径寻找资源，我们这里访问：<a target="_blank" rel="noopener" href="http://localhost:8080/webjars/jquery/3.4.1/jquery.js">http://localhost:8080/webjars/jquery/3.4.1/jquery.js</a></p>
-<p><img src="/2021/07/08/01_Web%E5%BC%80%E5%8F%91%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86/2.webp" alt="2"></p>
+<p><img src="01_Web%E5%BC%80%E5%8F%91%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86/2.webp" alt="2"></p>
 <h2 id="第二种静态资源映射规则"><a href="#第二种静态资源映射规则" class="headerlink" title="第二种静态资源映射规则"></a>第二种静态资源映射规则</h2><p>那我们项目中要是使用自己的静态资源该怎么导入呢？我们看下一行代码；</p>
 <p>我们去找staticPathPattern发现第二种映射规则 ：/** , 访问当前的项目任意资源，它会去找 resourceProperties 这个类，我们可以点进去看一下分析：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 进入方法</span></span><br><span class="line"><span class="keyword">public</span> String[] getStaticLocations() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.staticLocations;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 找到对应的值</span></span><br><span class="line"><span class="keyword">private</span> String[] staticLocations = CLASSPATH_RESOURCE_LOCATIONS;</span><br><span class="line"><span class="comment">// 找到路径</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] CLASSPATH_RESOURCE_LOCATIONS = &#123; </span><br><span class="line">    <span class="string">&quot;classpath:/META-INF/resources/&quot;</span>,</span><br><span class="line">  <span class="string">&quot;classpath:/resources/&quot;</span>, </span><br><span class="line">    <span class="string">&quot;classpath:/static/&quot;</span>, </span><br><span class="line">    <span class="string">&quot;classpath:/public/&quot;</span> </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -570,14 +570,14 @@
 <p>比如我访问  <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080/</a> ，就会找静态资源文件夹下的 index.html</p>
 <p>新建一个 index.html ，在我们上面的3个目录中任意一个；然后访问测试  <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080/</a>  看结果！</p>
 <p><strong>关于网站图标说明</strong>：（已过时被弃用）</p>
-<p><img src="/2021/07/08/01_Web%E5%BC%80%E5%8F%91%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86/3.jpg" alt="3"></p>
+<p><img src="01_Web%E5%BC%80%E5%8F%91%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86/3.jpg" alt="3"></p>
 <p>与其他静态资源一样，Spring Boot在配置的静态内容位置中查找 favicon.ico。如果存在这样的文件，它将自动用作应用程序的favicon。</p>
 <p>1、关闭SpringBoot默认图标</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#关闭默认图标</span></span><br><span class="line"><span class="meta">spring.mvc.favicon.enabled</span>=<span class="string">false</span></span><br></pre></td></tr></table></figure>
 
 <p>2、自己放一个图标在静态资源目录下，我放在 public 目录下</p>
 <p>3、清除浏览器缓存！刷新网页，发现图标已经变成自己的了！</p>
-<p><img src="/2021/07/08/01_Web%E5%BC%80%E5%8F%91%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86/4.webp" alt="4"></p>
+<p><img src="01_Web%E5%BC%80%E5%8F%91%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86/4.webp" alt="4"></p>
 <blockquote>
 <p>新版本SpringBoot弃用了favicon类和方法，可以通过将图标文件favicon.ico放在静态文件夹下，或者通过前端页面中的<code>&lt;link&gt;</code>标签进行引入</p>
 </blockquote>
@@ -978,7 +978,7 @@
                    autoplay='true'
                    theme='#42b983'
                    loop='all'
-                   order='list'
+                   order='random'
                    preload='auto'
                    volume='0.3'
                    list-folded='true'
@@ -1006,7 +1006,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">3.8k</span>
+                        class="white-color">3.9k</span>
             
             
             
