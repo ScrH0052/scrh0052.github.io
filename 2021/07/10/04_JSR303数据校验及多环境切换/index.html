@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="05_自动配置原理, ScrH0052">
+    <meta name="keywords" content="04_JSR303数据校验及多环境切换, ScrH0052">
     <meta name="description" content="ScrH0052利用hexo框架搭建的个人学习记录博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>05_自动配置原理 | ScrH0052</title>
+    <title>04_JSR303数据校验及多环境切换 | ScrH0052</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -312,12 +312,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">05_自动配置原理</h1>
+                    <h1 class="description center-align post-title">04_JSR303数据校验及多环境切换</h1>
                 </div>
             </div>
         </div>
@@ -502,49 +502,110 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="自动配置原理"><a href="#自动配置原理" class="headerlink" title="自动配置原理"></a>自动配置原理</h1><p>配置文件到底能写什么？怎么写？</p>
-<p>SpringBoot官方文档中有大量的配置，我们无法全部记住</p>
-<p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210710173319.jpg" alt="1"></p>
-<h2 id="分析自动配置原理"><a href="#分析自动配置原理" class="headerlink" title="分析自动配置原理"></a>分析自动配置原理</h2><p>我们以<strong>HttpEncodingAutoConfiguration（Http编码自动配置）</strong>为例解释自动配置原理；</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//表示这是一个配置类，和以前编写的配置文件一样，也可以给容器中添加组件；</span></span><br><span class="line"><span class="meta">@Configuration</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//启动指定类的ConfigurationProperties功能；</span></span><br><span class="line">  <span class="comment">//进入这个HttpProperties查看，将配置文件中对应的值和HttpProperties绑定起来；</span></span><br><span class="line">  <span class="comment">//并把HttpProperties加入到ioc容器中</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties({HttpProperties.class})</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//Spring底层@Conditional注解</span></span><br><span class="line">  <span class="comment">//根据不同的条件判断，如果满足指定的条件，整个配置类里面的配置就会生效；</span></span><br><span class="line">  <span class="comment">//这里的意思就是判断当前应用是否是web应用，如果是，当前配置类生效</span></span><br><span class="line"><span class="meta">@ConditionalOnWebApplication(</span></span><br><span class="line"><span class="meta">    type = Type.SERVLET</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//判断当前项目有没有这个类CharacterEncodingFilter；SpringMVC中进行乱码解决的过滤器；</span></span><br><span class="line"><span class="meta">@ConditionalOnClass({CharacterEncodingFilter.class})</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//判断配置文件中是否存在某个配置：spring.http.encoding.enabled；</span></span><br><span class="line">  <span class="comment">//如果不存在，判断也是成立的</span></span><br><span class="line">  <span class="comment">//即使我们配置文件中不配置pring.http.encoding.enabled=true，也是默认生效的；</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty(</span></span><br><span class="line"><span class="meta">    prefix = "spring.http.encoding",</span></span><br><span class="line"><span class="meta">    value = {"enabled"},</span></span><br><span class="line"><span class="meta">    matchIfMissing = true</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpEncodingAutoConfiguration</span> </span>{</span><br><span class="line">    <span class="comment">//他已经和SpringBoot的配置文件映射了</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Encoding properties;</span><br><span class="line">    <span class="comment">//只有一个有参构造器的情况下，参数的值就会从容器中拿</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HttpEncodingAutoConfiguration</span><span class="params">(HttpProperties properties)</span> </span>{</span><br><span class="line">        <span class="keyword">this</span>.properties = properties.getEncoding();</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//给容器中添加一个组件，这个组件的某些值需要从properties中获取</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span> <span class="comment">//判断容器没有这个组件？</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CharacterEncodingFilter <span class="title">characterEncodingFilter</span><span class="params">()</span> </span>{</span><br><span class="line">        CharacterEncodingFilter filter = <span class="keyword">new</span> OrderedCharacterEncodingFilter();</span><br><span class="line">        filter.setEncoding(<span class="keyword">this</span>.properties.getCharset().name());</span><br><span class="line">        filter.setForceRequestEncoding(<span class="keyword">this</span>.properties.shouldForce(org.springframework.boot.autoconfigure.http.HttpProperties.Encoding.Type.REQUEST));</span><br><span class="line">        filter.setForceResponseEncoding(<span class="keyword">this</span>.properties.shouldForce(org.springframework.boot.autoconfigure.http.HttpProperties.Encoding.Type.RESPONSE));</span><br><span class="line">        <span class="keyword">return</span> filter;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">//。。。。。。。</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+                <h1 id="JSR303数据校验"><a href="#JSR303数据校验" class="headerlink" title="JSR303数据校验"></a>JSR303数据校验</h1><h2 id="先看看如何使用"><a href="#先看看如何使用" class="headerlink" title="先看看如何使用"></a>先看看如何使用</h2><p>Springboot中可以用@validated来校验数据，如果数据异常则会统一抛出异常，方便异常中心统一处理。我们这里来写个注解让我们的name只能支持Email格式；</p>
+<pre class="line-numbers language-none"><code class="language-none">@Component //注册bean
+@ConfigurationProperties(prefix = "person")
+@Validated  //数据校验
+public class Person {
 
-<p><strong>一句话总结 ：根据当前不同的条件判断，决定这个配置类是否生效！</strong></p>
-<ul>
-<li>一但这个配置类生效；这个配置类就会给容器中添加各种组件；</li>
-<li>这些组件的属性是从对应的properties类中获取的，这些类里面的每一个属性又是和配置文件绑定的；</li>
-<li>所有在配置文件中能配置的属性都是在xxxxProperties类中封装着；</li>
-<li>配置文件能配置什么就可以参照某个功能对应的这个属性类</li>
-</ul>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从配置文件中获取指定的值和bean的属性进行绑定</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = "spring.http")</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpProperties</span> </span>{</span><br><span class="line">    <span class="comment">// .....</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+    @Email(message="邮箱格式错误") //name必须是邮箱格式
+    private String name;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>我们去配置文件里面试试前缀，看提示！</p>
-<p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210710173324.jpg" alt="2"></p>
-<p><strong>这就是自动装配的原理！</strong></p>
-<h2 id="精髓"><a href="#精髓" class="headerlink" title="精髓"></a>精髓</h2><p>1、SpringBoot启动会加载大量的自动配置类</p>
-<p>2、我们看我们需要的功能有没有在SpringBoot默认写好的自动配置类当中；</p>
-<p>3、我们再来看这个自动配置类中到底配置了哪些组件；（只要我们要用的组件存在在其中，我们就不需要再手动配置了）</p>
-<p>4、给容器中自动配置类添加组件的时候，会从properties类中获取某些属性。我们只需要在配置文件中指定这些属性的值即可；</p>
-<p><strong>xxxxAutoConfigurartion：自动配置类；</strong>给容器中添加组件</p>
-<p><strong>xxxxProperties:封装配置文件中相关属性；</strong></p>
-<h2 id="了解：-Conditional"><a href="#了解：-Conditional" class="headerlink" title="了解：@Conditional"></a>了解：@Conditional</h2><p>了解完自动装配的原理后，我们来关注一个细节问题，<strong>自动配置类必须在一定的条件下才能生效；</strong></p>
-<p><strong>@Conditional派生注解（Spring注解版原生的@Conditional作用）</strong></p>
-<p>作用：必须是@Conditional指定的条件成立，才给容器中添加组件，配置配里面的所有内容才生效；</p>
-<p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210710173329.jpg" alt="3"></p>
-<p><strong>那么多的自动配置类，必须在一定的条件下才能生效；也就是说，我们加载了这么多的配置类，但不是所有的都生效了。</strong></p>
-<p>我们怎么知道哪些自动配置类生效？</p>
-<p><strong>我们可以通过启用 debug=true属性；来让控制台打印自动配置报告，这样我们就可以很方便的知道哪些自动配置类生效；</strong></p>
- <figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#开启springboot的调试类</span></span><br><span class="line"><span class="attr">debug</span>=<span class="string">true</span></span><br></pre></td></tr></tbody></table></figure>
+<p>运行结果 ：default message [不是一个合法的电子邮件地址];</p>
+<p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210710172624.png" alt="1"></p>
+<p><strong>使用数据校验，可以保证数据的正确性；</strong></p>
+<h2 id="常见参数"><a href="#常见参数" class="headerlink" title="常见参数"></a>常见参数</h2><pre class="line-numbers language-none"><code class="language-none">@NotNull(message="名字不能为空")
+private String userName;
+@Max(value=120,message="年龄最大不能查过120")
+private int age;
+@Email(message="邮箱格式错误")
+private String email;
 
-<p><strong>Positive matches:（自动配置类启用的：正匹配）</strong></p>
-<p><strong>Negative matches:（没有启动，没有匹配成功的自动配置类：负匹配）</strong></p>
-<p><strong>Unconditional classes: （没有条件的类）</strong></p>
-<p>【演示：查看输出的日志】</p>
-<p>掌握吸收理解原理，即可以不变应万变！</p>
+空检查
+@Null       验证对象是否为null
+@NotNull    验证对象是否不为null, 无法查检长度为0的字符串
+@NotBlank   检查约束字符串是不是Null还有被Trim的长度是否大于0,只对字符串,且会去掉前后空格.
+@NotEmpty   检查约束元素是否为NULL或者是EMPTY.
+    
+Booelan检查
+@AssertTrue     验证 Boolean 对象是否为 true  
+@AssertFalse    验证 Boolean 对象是否为 false  
+    
+长度检查
+@Size(min=, max=) 验证对象（Array,Collection,Map,String）长度是否在给定的范围之内  
+@Length(min=, max=) string is between min and max included.
+
+日期检查
+@Past       验证 Date 和 Calendar 对象是否在当前时间之前  
+@Future     验证 Date 和 Calendar 对象是否在当前时间之后  
+@Pattern    验证 String 对象是否符合正则表达式的规则
+
+.......等等
+除此以外，我们还可以自定义一些数据校验规则<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h1 id="多环境切换"><a href="#多环境切换" class="headerlink" title="多环境切换"></a>多环境切换</h1><p>profile是Spring对不同环境提供不同配置功能的支持，可以通过激活不同的环境版本，实现快速切换环境；</p>
+<h2 id="多配置文件"><a href="#多配置文件" class="headerlink" title="多配置文件"></a>多配置文件</h2><p>我们在主配置文件编写的时候，文件名可以是 application-{profile}.properties/yml , 用来指定多个环境版本；</p>
+<p><strong>例如：</strong></p>
+<p>application-test.properties 代表测试环境配置</p>
+<p>application-dev.properties 代表开发环境配置</p>
+<p>但是Springboot并不会直接启动这些配置文件，它<strong>默认使用application.properties主配置文件</strong>；</p>
+<p>我们需要通过一个配置来选择需要激活的环境：</p>
+<pre class="line-numbers language-none"><code class="language-none">#比如在配置文件中指定使用dev环境，我们可以通过设置不同的端口号进行测试；
+#我们启动SpringBoot，就可以看到已经切换到dev下的配置了；
+spring.profiles.active=dev<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="yaml的多文档块"><a href="#yaml的多文档块" class="headerlink" title="yaml的多文档块"></a>yaml的多文档块</h2><p>和properties配置文件中一样，但是使用yml去实现不需要创建多个配置文件，更加方便了 !</p>
+<pre class="line-numbers language-none"><code class="language-none">server:
+  port: 8081
+#选择要激活那个环境块
+spring:
+  profiles:
+    active: prod
+
+---
+server:
+  port: 8083
+spring:
+  profiles: dev #配置环境的名称
+
+
+---
+
+server:
+  port: 8084
+spring:
+  profiles: prod  #配置环境的名称<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>注意：如果yml和properties同时都配置了端口，并且没有激活其他环境 ， 默认会使用properties配置文件的！</strong></p>
+<h2 id="配置文件加载位置"><a href="#配置文件加载位置" class="headerlink" title="配置文件加载位置"></a>配置文件加载位置</h2><p><strong>外部加载配置文件的方式十分多，我们选择最常用的即可，在开发的资源文件中进行配置！</strong></p>
+<p>官方外部配置文件说明参考文档</p>
+<p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210710172631.webp" alt="2"></p>
+<p>springboot 启动会扫描以下位置的application.properties或者application.yml文件作为Spring boot的默认配置文件：</p>
+<pre class="line-numbers language-none"><code class="language-none">优先级1：项目路径下的config文件夹配置文件  		/config/application.yml
+优先级2：项目路径下配置文件					  /application.yml
+优先级3：资源路径下的config文件夹配置文件 		/resources/config/application.yml
+优先级4：资源路径下配置文件					  /resources/application.yml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>优先级由高到底，高优先级的配置会覆盖低优先级的配置；</p>
+<p><strong>SpringBoot会从这四个位置全部加载主配置文件；互补配置；</strong></p>
+<p>我们在最低级的配置文件中设置一个项目访问路径的配置来测试互补问题；</p>
+<pre class="line-numbers language-none"><code class="language-none">#配置项目的访问路径
+server.servlet.context-path=/kuang<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="拓展，运维小技巧"><a href="#拓展，运维小技巧" class="headerlink" title="拓展，运维小技巧"></a>拓展，运维小技巧</h2><p>指定位置加载配置文件</p>
+<p>我们还可以通过spring.config.location来改变默认的配置文件位置</p>
+<p>项目打包好以后，我们可以使用命令行参数的形式，启动项目的时候来指定配置文件的新位置；这种情况，一般是后期运维做的多，相同配置，外部指定的配置文件优先级最高</p>
+<pre class="line-numbers language-none"><code class="language-none">java -jar spring-boot-config.jar --spring.config.location=F:/application.properties<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
                 
             </div>
@@ -613,7 +674,7 @@
         repo: 'blog_comments_repo',
         owner: 'scrh0052',
         admin: "scrh0052",
-        id: '2021-07-10T09-35-57',
+        id: '2021-07-10T09-30-23',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -645,13 +706,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/07/10/SpringBoot%E5%9F%BA%E7%A1%80/02%E5%89%AF-Thymeleaf%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">
+                <a href="/2021/07/10/05_%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="02副_Thymeleaf的一些使用技巧">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="05_自动配置原理">
                         
-                        <span class="card-title">02副_Thymeleaf的一些使用技巧</span>
+                        <span class="card-title">05_自动配置原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -668,8 +729,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/SpringBoot-Web/" class="post-category">
-                                    SpringBoot Web
+                            <a href="/categories/SpringBoot-%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    SpringBoot 基础
                                 </a>
                             
                             
@@ -683,12 +744,12 @@
                         <span class="chip bg-color">SpringBoot</span>
                     </a>
                     
-                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">学习笔记</span>
+                    <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                        <span class="chip bg-color">基础知识</span>
                     </a>
                     
-                    <a href="/tags/SpringBoot-web/">
-                        <span class="chip bg-color">SpringBoot_web</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
                 </div>
@@ -702,13 +763,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/10/04-JSR303%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E5%8F%8A%E5%A4%9A%E7%8E%AF%E5%A2%83%E5%88%87%E6%8D%A2/">
+                <a href="/2021/07/10/03_yaml%E9%85%8D%E7%BD%AE%E6%B3%A8%E5%85%A5/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="04_JSR303数据校验及多环境切换">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="03_yaml配置注入">
                         
-                        <span class="card-title">04_JSR303数据校验及多环境切换</span>
+                        <span class="card-title">03_yaml配置注入</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -946,7 +1007,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">18.9k</span>
+                        class="white-color">23.1k</span>
             
             
             

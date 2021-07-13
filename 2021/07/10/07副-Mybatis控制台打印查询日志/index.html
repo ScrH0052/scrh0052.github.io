@@ -502,6 +502,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -509,10 +512,12 @@
             <div id="articleContent">
                 <h1 id="Mybatis控制台打印数据库查询日志的相关配置"><a href="#Mybatis控制台打印数据库查询日志的相关配置" class="headerlink" title="Mybatis控制台打印数据库查询日志的相关配置"></a>Mybatis控制台打印数据库查询日志的相关配置</h1><p>前言：在使用SSM框架的过程中，Tomcat在控制台打印的数据库查询的日志对查找bug起到了很重要的作用，而在SpringBoot里没有默认开启这个功能。</p>
 <h2 id="开启方法的配置"><a href="#开启方法的配置" class="headerlink" title="开启方法的配置"></a>开启方法的配置</h2><p>在application.yml中添加以下配置：</p>
-<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">level:</span> </span><br><span class="line">		<span class="attr">com.scrh.springbootdemo01.mapper:</span> <span class="string">t</span> <span class="comment">#com.scrh.springbootdemo01.mapper为项目的mapper包目录</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">logging</span><span class="token punctuation">:</span>
+	<span class="token key atrule">level</span><span class="token punctuation">:</span> 
+		<span class="token key atrule">com.scrh.springbootdemo01.mapper</span><span class="token punctuation">:</span> t <span class="token comment">#com.scrh.springbootdemo01.mapper为项目的mapper包目录</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>在application. properties中添加以下配置：</p>
-<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">1</span> <span class="string">logging.level.com.scrh.springbootdemo01.mapper=debug</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token attr-name">1</span> <span class="token attr-value">logging.level.com.scrh.springbootdemo01.mapper=debug</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
                 
@@ -919,7 +924,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">18.9k</span>
+                        class="white-color">23.1k</span>
             
             
             
