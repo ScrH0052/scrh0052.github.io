@@ -477,14 +477,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-12
+                    2021-07-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.2k
+                    4.3k
                 </div>
                 
 
@@ -720,37 +720,37 @@ http<span class="token punctuation">.</span><span class="token function">logout<
 <p>7、修改我们的 前端页面</p>
 <ol>
 <li><p>导入命名空间</p>
-</li>
-<li><p>```html<br>xmlns:sec=”<a target="_blank" rel="noopener" href="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5&quot;">http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"</a></p>
-<pre class="line-numbers language-none"><code class="language-none">
-3. 修改导航栏，增加认证判断
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name"><span class="token namespace">xmlns:</span>sec</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.thymeleaf.org/thymeleaf-extras-springsecurity5<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<span class="token comment">&lt;!--以上命名空间为错误写法，4及3的版本是可以这样用，但5版本不行。狂神这笔记的内容有更新都不进行测试是吗。。--&gt;</span>
+ <span class="token comment">&lt;!--以下是正确的命名空间引用--&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span>  <span class="token attr-name"><span class="token namespace">xmlns:</span>sec</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.thymeleaf.org/extras/spring-security<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<span class="token comment">&lt;!--虽然命名空间写错不影响使用，但会影响IDE的提示--&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>修改导航栏，增加认证判断</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!--登录注销--&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>right menu<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
 
-4. ```html
-   &lt;!--登录注销--&gt;
-   &lt;div class="right menu"&gt;
-   
-      &lt;!--如果未登录--&gt;
-      &lt;div sec:authorize="!isAuthenticated()"&gt;
-          &lt;a class="item" th:href="@{/login}"&gt;
-              &lt;i class="address card icon"&gt;&lt;/i&gt; 登录
-          &lt;/a&gt;
-      &lt;/div&gt;
-   
-      &lt;!--如果已登录--&gt;
-      &lt;div sec:authorize="isAuthenticated()"&gt;
-          &lt;a class="item"&gt;
-              &lt;i class="address card icon"&gt;&lt;/i&gt;
-             用户名：&lt;span sec:authentication="principal.username"&gt;&lt;/span&gt;
-             角色：&lt;span sec:authentication="principal.authorities"&gt;&lt;/span&gt;
-          &lt;/a&gt;
-      &lt;/div&gt;
-   
-      &lt;div sec:authorize="isAuthenticated()"&gt;
-          &lt;a class="item" th:href="@{/logout}"&gt;
-              &lt;i class="address card icon"&gt;&lt;/i&gt; 注销
-          &lt;/a&gt;
-      &lt;/div&gt;
-   &lt;/div&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+   <span class="token comment">&lt;!--如果未登录--&gt;</span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">sec:</span>authorize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>!isAuthenticated()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>item<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>@{/login}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>address card icon<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>i</span><span class="token punctuation">&gt;</span></span> 登录
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+   <span class="token comment">&lt;!--如果已登录--&gt;</span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">sec:</span>authorize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>isAuthenticated()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>item<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>address card icon<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>i</span><span class="token punctuation">&gt;</span></span>
+          用户名：<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name"><span class="token namespace">sec:</span>authentication</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>principal.username<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
+          角色：<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name"><span class="token namespace">sec:</span>authentication</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>principal.authorities<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">sec:</span>authorize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>isAuthenticated()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>item<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>@{/logout}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>address card icon<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>i</span><span class="token punctuation">&gt;</span></span> 注销
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
 <p>8、重启测试，我们可以登录试试看，登录成功后确实，显示了我们想要的页面；</p>
 <p>9、如果注销404了，就是因为它默认防止csrf跨站请求伪造，因为会产生安全问题，我们可以将请求改为post表单提交，或者在spring security中关闭csrf功能；我们试试：在 配置中增加 <code>http.csrf().disable();</code></p>
@@ -863,7 +863,10 @@ http<span class="token punctuation">.</span><span class="token function">logout<
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//定制记住我的参数！</span>
 http<span class="token punctuation">.</span><span class="token function">rememberMe</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">rememberMeParameter</span><span class="token punctuation">(</span><span class="token string">"remember"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>7、测试，OK</p>
+
+
+
+
 <h2 id="完整配置代码"><a href="#完整配置代码" class="headerlink" title="完整配置代码"></a>完整配置代码</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>kuang<span class="token punctuation">.</span>config</span><span class="token punctuation">;</span>
 
 <span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>security<span class="token punctuation">.</span>config<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>authentication<span class="token punctuation">.</span>builders<span class="token punctuation">.</span></span><span class="token class-name">AuthenticationManagerBuilder</span><span class="token punctuation">;</span>
@@ -921,7 +924,7 @@ http<span class="token punctuation">.</span><span class="token function">remembe
               <span class="token punctuation">.</span><span class="token function">withUser</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">password</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">BCryptPasswordEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span><span class="token string">"123456"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">roles</span><span class="token punctuation">(</span><span class="token string">"vip1"</span><span class="token punctuation">,</span><span class="token string">"vip2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<link rel="stylesheet" href="/css/markmap.css" type="text/css">
                 
             </div>
             <hr/>
@@ -1021,18 +1024,17 @@ http<span class="token punctuation">.</span><span class="token function">remembe
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/07/12/08-%E9%9B%86%E6%88%90SpringSercurity/">
+                <a href="/2021/07/13/09-%E9%9B%86%E6%88%90shiro/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="08-集成Spring Security">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="09-集成shiro">
                         
-                        <span class="card-title">08-集成Spring Security</span>
+                        <span class="card-title">09-集成shiro</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1042,9 +1044,9 @@ http<span class="token punctuation">.</span><span class="token function">remembe
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-12
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-13
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1057,7 +1059,6 @@ http<span class="token punctuation">.</span><span class="token function">remembe
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1073,8 +1074,8 @@ http<span class="token punctuation">.</span><span class="token function">remembe
                         <span class="chip bg-color">SpringBoot_web</span>
                     </a>
                     
-                    <a href="/tags/Spring-Security/">
-                        <span class="chip bg-color">Spring Security</span>
+                    <a href="/tags/shiro/">
+                        <span class="chip bg-color">shiro</span>
                     </a>
                     
                 </div>
@@ -1336,7 +1337,7 @@ http<span class="token punctuation">.</span><span class="token function">remembe
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">23.1k</span>
+                        class="white-color">30k</span>
             
             
             
@@ -1609,6 +1610,14 @@ $(function () {
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
-</body>
+<!-- hexo injector body_end start --><script src="https://cdn.jsdelivr.net/npm/d3@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.7.4/dist/browser/view.min.js"></script>
+  <script>
+      const mindmaps = document.querySelectorAll('.markmap-svg');
+   
+      for(const mindmap of mindmaps) {
+          markmap.markmap(mindmap, JSON.parse(mindmap.innerHTML));
+      }
+  </script> <!-- hexo injector body_end end --></body>
 
 </html>

@@ -986,7 +986,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">23.1k</span>
+                        class="white-color">30k</span>
             
             
             
@@ -1259,6 +1259,14 @@ $(function () {
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
-</body>
+<!-- hexo injector body_end start --><script src="https://cdn.jsdelivr.net/npm/d3@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.7.4/dist/browser/view.min.js"></script>
+  <script>
+      const mindmaps = document.querySelectorAll('.markmap-svg');
+   
+      for(const mindmap of mindmaps) {
+          markmap.markmap(mindmap, JSON.parse(mindmap.innerHTML));
+      }
+  </script> <!-- hexo injector body_end end --></body>
 
 </html>
