@@ -484,14 +484,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.1k
+                    6.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    27 分
+                    28 分
                 </div>
                 
 
@@ -514,7 +514,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="shiro简介"><a href="#shiro简介" class="headerlink" title="shiro简介"></a>shiro简介</h1><hr>
+                <h1 id="shiro简介"><a href="#shiro简介" class="headerlink" title="shiro简介"></a>shiro简介</h1><p><strong>ScrH0052:基于<code>@狂神说</code>的笔记进行学习，原笔记有不少地方有所缺陷，已经进行补充和修改，如有不完善或者错误的地方欢迎使用gitalk进行留言</strong></p>
+<hr>
 <h2 id="什么是Shiro"><a href="#什么是Shiro" class="headerlink" title="什么是Shiro"></a>什么是Shiro</h2><ul>
 <li>Apache Shiro 是一个Java 的安全（权限）框架。 </li>
 <li>Shiro 可以非常容易的开发出足够好的应用，其不仅可以用在JavaSE环境，也可以用在JavaEE环 境。</li>
@@ -530,7 +531,7 @@
 <li>Cryptography：加密，保护数据的安全性，如密码加密存储到数据库中，而不是明文存储；</li>
 <li>Cryptography：加密，保护数据的安全性，如密码加密存储到数据库中，而不是明文存储；</li>
 <li>Caching：缓存，比如用户登录后，其用户信息，拥有的角色、权限不必每次去查，这样可以提高 效率</li>
-<li>Concurrency：Shiro支持多线程应用的并发验证，即，如在一个线程中开启另一个线程，能把权限 自动的传播过去</li>
+<li>Concurrency：Shiro支持多线程应用的并发验证，即，如在一个线程中开启另一个线程，能把权限自动的传播过去</li>
 <li>Testing：提供测试支持；</li>
 <li>Run As：允许一个用户假装为另一个用户（如果他们允许）的身份进行访问；</li>
 <li>Remember Me：记住我，这个是非常常见的功能，即一次登录后，下次再来的话不用登录了</li>
@@ -541,18 +542,18 @@
 <ul>
 <li>subject： 应用代码直接交互的对象是Subject，也就是说Shiro的对外API核心就是Subject， Subject代表了当前的用户，这个用户不一定是一个具体的人，与当前应用交互的任何东西都是 Subject，如网络爬虫，机器人等，与Subject的所有交互都会委托给SecurityManager；Subject其 实是一个门面，SecurityManageer 才是实际的执行者</li>
 <li>SecurityManager：安全管理器，即所有与安全有关的操作都会与SercurityManager交互，并且它 管理着所有的Subject，可以看出它是Shiro的核心，它负责与Shiro的其他组件进行交互，它相当于 SpringMVC的DispatcherServlet的角色</li>
-<li>Realm：Shiro从Realm获取安全数据（如用户，角色，权限），就是说SecurityManager 要验证 用户身份，那么它需要从Realm 获取相应的用户进行比较，来确定用户的身份是否合法；也需要从 Realm得到用户相应的角色、权限，进行验证用户的操作是否能够进行，可以把Realm看成 DataSource；</li>
+<li>Realm：Shiro从Realm获取安全数据（如用户，角色，权限），就是说SecurityManager 要验证用户身份，那么它需要从Realm 获取相应的用户进行比较，来确定用户的身份是否合法；也需要从 Realm得到用户相应的角色、权限，进行验证用户的操作是否能够进行，可以把Realm看成 DataSource；</li>
 </ul>
 <hr>
 <h2 id="Shiro框架（内部）"><a href="#Shiro框架（内部）" class="headerlink" title="Shiro框架（内部）"></a>Shiro框架（内部）</h2><p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210713191253.png" alt="img"></p>
 <ul>
 <li>Subject：任何可以与应用交互的 ‘用户’； </li>
-<li>Security Manager：相当于SpringMVC中的DispatcherServlet；是Shiro的心脏，所有具体的交互 都通过Security Manager进行控制，它管理者所有的Subject，且负责进行认证，授权，会话，及 缓存的管理。</li>
+<li>Security Manager：相当于SpringMVC中的DispatcherServlet；是Shiro的心脏，所有具体的交互都通过Security Manager进行控制，它管理者所有的Subject，且负责进行认证，授权，会话，及缓存的管理。</li>
 <li> Authenticator：负责Subject认证，是一个扩展点，可以自定义实现；可以使用认证策略 （Authentication Strategy），即什么情况下算用户认证通过了；</li>
-<li> Authorizer：授权器，即访问控制器，用来决定主体是否有权限进行相应的操作；即控制着用户能 访问应用中的那些功能； </li>
+<li> Authorizer：授权器，即访问控制器，用来决定主体是否有权限进行相应的操作；即控制着用户能访问应用中的那些功能； </li>
 <li>Realm：可以有一个或者多个的realm，可以认为是安全实体数据源，即用于获取安全实体的，可 以用JDBC实现，也可以是内存实现等等，由用户提供；所以一般在应用中都需要实现自己的realm </li>
-<li>SessionManager：管理Session生命周期的组件，而Shiro并不仅仅可以用在Web环境，也可以用 在普通的JavaSE环境中 </li>
-<li>CacheManager：缓存控制器，来管理如用户，角色，权限等缓存的；因为这些数据基本上很少改 变，放到缓存中后可以提高访问的性能；</li>
+<li>SessionManager：管理Session生命周期的组件，而Shiro并不仅仅可以用在Web环境，也可以用在普通的JavaSE环境中 </li>
+<li>CacheManager：缓存控制器，来管理如用户，角色，权限等缓存的；因为这些数据基本上很少改变，放到缓存中后可以提高访问的性能；</li>
 <li> Cryptography：密码模块，Shiro 提高了一些常见的加密组件用于密码加密，解密等</li>
 </ul>
 <hr>
@@ -570,8 +571,7 @@
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>shiro-core<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>1.4.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
-    <span class="token comment">&lt;!-- Shiro uses SLF4J for logging. We'll use the 'simple' binding
-    in this example app. See http://www.slf4j.org for more info. --&gt;</span>
+    <span class="token comment">&lt;!-- Shiro uses SLF4J for logging. We'll use the 'simple' binding in this example app. See http://www.slf4j.org for more info. --&gt;</span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.slf4j<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>slf4j-simple<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
@@ -584,7 +584,7 @@
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>1.7.21<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">&gt;</span></span>test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ol start="4">
 <li><p>编写Shiro配置</p>
@@ -1196,13 +1196,13 @@ shiroFilterFactoryBean<span class="token punctuation">.</span><span class="token
     <span class="token comment">//3. 执行登录的方法，只要没有异常就代表登录成功！</span>
     <span class="token keyword">try</span> <span class="token punctuation">{</span>
     	subject<span class="token punctuation">.</span><span class="token function">login</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//登录成功！返回首页</span>
-    	<span class="token keyword">return</span> <span class="token string">"index"</span><span class="token punctuation">;</span>
+    	<span class="token keyword">return</span> <span class="token string">"/index"</span><span class="token punctuation">;</span>	<span class="token comment">//ScrH0052:我觉得这里用重定向"redirect:/"更好点，地址栏不会多个"/login"</span>
     <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">UnknownAccountException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//用户名不存在</span>
     	model<span class="token punctuation">.</span><span class="token function">addAttribute</span><span class="token punctuation">(</span><span class="token string">"msg"</span><span class="token punctuation">,</span><span class="token string">"用户名不存在"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    	<span class="token keyword">return</span> <span class="token string">"login"</span><span class="token punctuation">;</span>
+    	<span class="token keyword">return</span> <span class="token string">"/login"</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IncorrectCredentialsException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//密码错误</span>
     	model<span class="token punctuation">.</span><span class="token function">addAttribute</span><span class="token punctuation">(</span><span class="token string">"msg"</span><span class="token punctuation">,</span><span class="token string">"密码错误"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    	<span class="token keyword">return</span> <span class="token string">"login"</span><span class="token punctuation">;</span>
+    	<span class="token keyword">return</span> <span class="token string">"/login"</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p> 在前端修改对应的信息输出或者请求！</p>
@@ -1246,6 +1246,20 @@ shiroFilterFactoryBean<span class="token punctuation">.</span><span class="token
 </li>
 </ol>
 <hr>
+<h3 id="ScrH0052补充："><a href="#ScrH0052补充：" class="headerlink" title="ScrH0052补充："></a>ScrH0052补充：</h3><p>登出的设置：</p>
+<p>​    在控制用户登录的controller中添加</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/logout"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">logout</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//1. 获取Subject</span>
+    <span class="token class-name">Subject</span> subject <span class="token operator">=</span> <span class="token class-name">SecurityUtils</span><span class="token punctuation">.</span><span class="token function">getSubject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//2. 登出注销</span>
+    subject<span class="token punctuation">.</span><span class="token function">logout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">"redirect:/"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<hr>
 <h2 id="整合数据库"><a href="#整合数据库" class="headerlink" title="整合数据库"></a>整合数据库</h2><p>配置在前面整合jdbc、druid、Mybatis中已经有很多了，这里省略部分代码</p>
 <ol>
 <li><p>导入Mybatis相关依赖</p>
@@ -1255,6 +1269,7 @@ shiroFilterFactoryBean<span class="token punctuation">.</span><span class="token
 <li><p>编写mybatis的配置 <code>application.properties</code></p>
 </li>
 <li><p>编写实体类,引入Lombok</p>
+<p><strong><font style="color:red">注意：实体类需要添加<code>Serializable</code>接口，否则在设置remeberMe时会出现无法序列化异常！</font></strong></p>
 </li>
 <li><p>编写Mapper接口</p>
 </li>
@@ -1351,7 +1366,7 @@ filterMap<span class="token punctuation">.</span><span class="token function">pu
 <ul>
 <li><p>在用户登录授权的时候，将用户放在 <code>Principal</code> 中，改造下之前的代码</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">SimpleAuthenticationInfo</span><span class="token punctuation">(</span>user<span class="token punctuation">,</span> user<span class="token punctuation">.</span><span class="token function">getPwd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li><p>然后再授权的地方获得这个用户，从而获得它的权限</p>
+<li><p>（ScrH0052重新描述）在UserRealm中重写<code>doGetAuthorizationInfo()</code>方法，对用户进行授权</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//执行授权逻辑</span>
 <span class="token annotation punctuation">@Override</span>
 <span class="token keyword">protected</span> <span class="token class-name">AuthorizationInfo</span> <span class="token function">doGetAuthorizationInfo</span><span class="token punctuation">(</span><span class="token class-name">PrincipalCollection</span> principals<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -1363,8 +1378,9 @@ filterMap<span class="token punctuation">.</span><span class="token function">pu
     <span class="token class-name">Subject</span> subject <span class="token operator">=</span> <span class="token class-name">SecurityUtils</span><span class="token punctuation">.</span><span class="token function">getSubject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//获得当前对象</span>
     <span class="token class-name">User</span> currentUser <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> subject<span class="token punctuation">.</span><span class="token function">getPrincipal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//拿到User对象</span>
     info<span class="token punctuation">.</span><span class="token function">addStringPermission</span><span class="token punctuation">(</span>currentUser<span class="token punctuation">.</span><span class="token function">getPerms</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//设置权限</span>
+    <span class="token comment">//ScrH0052补充：正常情况应该设置3个表，用户表，角色表，权限表，在进行用户搜索时根据用户拥有的角色来获取对应权限的集合（List），SimpleAuthorizationInfo 的 addStringPermission() 方法可以直接接受 Object 或者 String 类型的集合</span>
     <span class="token keyword">return</span> info<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 </li>
 <li><p>给数据库中的用户增加一些权限</p>
@@ -1387,7 +1403,7 @@ filterMap<span class="token punctuation">.</span><span class="token function">pu
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>thymeleaf-extras-shiro<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>2.0.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>配置一个shiro的Dialect ，在shiro的配置中增加一个Bean</p>
+<li><p>配置一个shiro的Dialect ，在shiro的配置中增加一个Bean（必要步骤，漏掉标签就不起作用了）</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//配置ShiroDialect：方言，用于 thymeleaf 和 shiro 标签配合使用</span>
 <span class="token annotation punctuation">@Bean</span>
 <span class="token keyword">public</span> <span class="token class-name">ShiroDialect</span> <span class="token function">getShiroDialect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -1404,9 +1420,22 @@ filterMap<span class="token punctuation">.</span><span class="token function">pu
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">shiro:</span>hasPermission</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>user:update<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name"><span class="token namespace">th:</span>href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>@{/user/update}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>update<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>重启测试</p>
+<li><p>重启测试，页面中不再显示<code>add</code>和<code>update</code>的链接，拥有不同权限的用户所显示的内容也不一样。</p>
+</li>
+<li><p>为了完美，我们在用户登录后应该把信息放到Session中，我们完善下！在执行认证逻辑时候，加 入session</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Subject</span> subject <span class="token operator">=</span> <span class="token class-name">SecurityUtils</span><span class="token punctuation">.</span><span class="token function">getSubject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+subject<span class="token punctuation">.</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">"loginUser"</span><span class="token punctuation">,</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li><p> 前端从session中获取，然后用来判断是否显示登录</p>
 </li>
 </ol>
+   <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name"><span class="token namespace">th:</span>if</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${session.loginUser==null}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name"><span class="token namespace">th:</span>href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>@{/toLogin}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>登录<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ol start="7">
+<li>进行测试</li>
+</ol>
+<hr>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css">
                 
             </div>
@@ -1790,15 +1819,15 @@ filterMap<span class="token punctuation">.</span><span class="token function">pu
     <div class="row">
         <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
                    server="netease"
-                   type="song"
-                   id="458231455"
+                   type="playlist"
+                   id="6849523054"
                    fixed='true'
                    autoplay='true'
                    theme='#42b983'
                    loop='all'
                    order='random'
                    preload='auto'
-                   volume='0.2'
+                   volume='0.1'
                    list-folded='true'
         >
         </meting-js>
@@ -1824,7 +1853,7 @@ filterMap<span class="token punctuation">.</span><span class="token function">pu
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">30k</span>
+                        class="white-color">30.4k</span>
             
             
             
