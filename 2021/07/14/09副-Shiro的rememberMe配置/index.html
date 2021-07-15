@@ -433,12 +433,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                                <span class="chip bg-color">学习笔记</span>
-                            </a>
-                        
                             <a href="/tags/SpringBoot/">
                                 <span class="chip bg-color">SpringBoot</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">学习笔记</span>
                             </a>
                         
                             <a href="/tags/SpringBoot-web/">
@@ -695,6 +695,7 @@
 <p>本来我是想用拦截器进行对请求进行拦截来实现这一功能，但由于IOC的加载顺序问题，导致在拦截器中无法使用service层的任何功能（拦截器优先于service加载，并且在service被加载之前就实现了拦截方法的调用，所以会报空指针异常），只好暂时放弃这个想法。</p>
 </blockquote>
 <p>以上是2021年7月15日上午的描述。在当天下午，经过两个小时的不断查找资料和调试测试，笔者已经实现了使用拦截器进行对每一个请求的认证及授权，实现步骤如下。</p>
+<hr>
 <p>###首先移除一个坑</p>
 <p>大伙应该都知道，浏览器访问服务器时，一般默认都会产生<code>jsessionid</code>这个属性来标识身份，而Shiro的机制里也会对这条<code>cookie</code>进行核对。</p>
 <p>但是每次重新打开时，浏览器生成的<code>jsessionid</code>都是不同的，所以在关闭浏览器再次打开时，除了对rememberMe中信息进行核对外，还会对这个属性核对。这时就会出现异常错误，导致授权不通过。</p>
@@ -722,6 +723,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <p>这样就不会再被<code>jsessionid</code>影响到了！</p>
+<hr>
 <h3 id="创建账户检测拦截器"><a href="#创建账户检测拦截器" class="headerlink" title="创建账户检测拦截器"></a>创建账户检测拦截器</h3><p>AccountCheckInterceptor.java</p>
 <p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210715162018.png" alt="image-20210715162011823"></p>
 <p>代码如下：</p>
@@ -847,12 +849,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                                    <span class="chip bg-color">学习笔记</span>
-                                </a>
-                            
                                 <a href="/tags/SpringBoot/">
                                     <span class="chip bg-color">SpringBoot</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
                                 <a href="/tags/SpringBoot-web/">
@@ -973,12 +975,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">学习笔记</span>
-                    </a>
-                    
                     <a href="/tags/SpringBoot/">
                         <span class="chip bg-color">SpringBoot</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
                     <a href="/tags/SpringBoot-web/">
@@ -1034,12 +1036,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">学习笔记</span>
-                    </a>
-                    
                     <a href="/tags/SpringBoot/">
                         <span class="chip bg-color">SpringBoot</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
                     <a href="/tags/SpringBoot-web/">
@@ -1228,12 +1230,16 @@
 <style>
     .aplayer .aplayer-lrc p {
         
+        display: none;
+        
         font-size: 12px;
         font-weight: 700;
         line-height: 16px !important;
     }
 
     .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
         
         font-size: 15px;
         color: #42b983;
@@ -1287,6 +1293,9 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">33.8k</span>
             
             
             
