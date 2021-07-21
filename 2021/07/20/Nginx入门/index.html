@@ -478,7 +478,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-20
+                    2021-07-21
                 </div>
                 
 
@@ -704,8 +704,8 @@ location / {
 <td>= 开头表示精确匹配</td>
 </tr>
 <tr>
-<td>^~</td>
-<td>^<del>开头表示uri以某个常规字符串开头，理解为匹配 url路径即可。nginx不对url做编码，因此请求为/static/20%/aa，可以被规则^</del> /static/ /aa匹配到（注意是空格）</td>
+<td><code>^~</code></td>
+<td><code>^~</code>开头表示uri以某个常规字符串开头，理解为匹配 url路径即可。nginx不对url做编码，因此请求为/static/20%/aa，可以被规则^~ /static/ /aa匹配到（注意是空格）</td>
 </tr>
 <tr>
 <td>~</td>
@@ -716,8 +716,8 @@ location / {
 <td>~* 开头表示不区分大小写的正则匹配</td>
 </tr>
 <tr>
-<td>!<del>和!</del>*</td>
-<td>!<del>和!</del>*分别为区分大小写不匹配及不区分大小写不匹配的正则</td>
+<td><code>!~</code>和<code>!~*</code></td>
+<td><code>!~</code>和<code>!~*</code>分别为区分大小写不匹配及不区分大小写不匹配的正则</td>
 </tr>
 <tr>
 <td>/</td>
