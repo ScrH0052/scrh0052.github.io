@@ -478,14 +478,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-15
+                    2021-07-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    2.5k
                 </div>
                 
 
@@ -689,20 +689,17 @@
 <p>这样，就可以使用rememberMe功能了。</p>
 <hr>
 <h1 id="缺陷和问题的修改"><a href="#缺陷和问题的修改" class="headerlink" title="缺陷和问题的修改"></a>缺陷和问题的修改</h1><hr>
-<p>##二次打开浏览器时，无法在session中得到”user”</p>
-<p>##二次打开浏览器时，即使数据库中的密码发生变化，仍能访问资源</p>
-<blockquote>
+<h2 id="二次打开浏览器时，无法在session中得到”user”"><a href="#二次打开浏览器时，无法在session中得到”user”" class="headerlink" title="二次打开浏览器时，无法在session中得到”user”"></a>二次打开浏览器时，无法在session中得到”user”</h2><h2 id="二次打开浏览器时，即使数据库中的密码发生变化，仍能访问资源"><a href="#二次打开浏览器时，即使数据库中的密码发生变化，仍能访问资源" class="headerlink" title="二次打开浏览器时，即使数据库中的密码发生变化，仍能访问资源"></a>二次打开浏览器时，即使数据库中的密码发生变化，仍能访问资源</h2><blockquote>
 <p>关闭浏览器再次打开进入首页连接服务器时，Shiro的rememberMe功能缺陷，导致在重新访问时没有进行对用户的认证，仅仅进行了授权操作，所以即使数据库中用户的密码发生了变化，直接使用上面的方法还是会让这次的访问得到访问权限。所以在这里我对访问视图层添加了一个权限的重新认证方法，这样当用户在其他地址或者数据库修改密码时，再在这次的访问中就无法进行访问了。</p>
 <p>本来我是想用拦截器进行对请求进行拦截来实现这一功能，但由于IOC的加载顺序问题，导致在拦截器中无法使用service层的任何功能（拦截器优先于service加载，并且在service被加载之前就实现了拦截方法的调用，所以会报空指针异常），只好暂时放弃这个想法。</p>
 </blockquote>
 <p>以上是2021年7月15日上午的描述。在当天下午，经过两个小时的不断查找资料和调试测试，笔者已经实现了使用拦截器进行对每一个请求的认证及授权，实现步骤如下。</p>
 <hr>
-<p>###首先移除一个坑</p>
-<p>大伙应该都知道，浏览器访问服务器时，一般默认都会产生<code>jsessionid</code>这个属性来标识身份，而Shiro的机制里也会对这条<code>cookie</code>进行核对。</p>
-<p>但是每次重新打开时，浏览器生成的<code>jsessionid</code>都是不同的，所以在关闭浏览器再次打开时，除了对rememberMe中信息进行核对外，还会对这个属性核对。这时就会出现异常错误，导致授权不通过。</p>
+<h3 id="首先移除一个坑"><a href="#首先移除一个坑" class="headerlink" title="首先移除一个坑"></a>首先移除一个坑</h3><p>大伙应该都知道，浏览器访问服务器时，一般默认都会从服务器获取<code>jsessionid</code>这个属性来标识身份，而Shiro的机制里也会对这条<code>cookie</code>进行重写，并在rememberMe使用时会进行核对。</p>
+<p>但是每次重新打开时，浏览器得到的<code>jsessionid</code>都是不同的，所以在关闭浏览器再次打开时，除了对rememberMe中信息进行核对外，还会对这个属性核对。这时就会出现异常错误，导致授权不通过。</p>
 <ul>
 <li><p>所以需要在<code>ShiroConfig</code>中加入以下配置：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//移除自带的jsessionid，防止第二次打开浏览器时进行注销操作发生jsessionid不同的异常</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//关闭重写jsessionid，防止第二次打开浏览器时进行注销操作发生jsessionid不同的异常</span>
 <span class="token annotation punctuation">@Bean</span>
 <span class="token keyword">public</span> <span class="token class-name">DefaultSessionManager</span> <span class="token function">sessionManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
     <span class="token class-name">DefaultWebSessionManager</span> sessionManager <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DefaultWebSessionManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
