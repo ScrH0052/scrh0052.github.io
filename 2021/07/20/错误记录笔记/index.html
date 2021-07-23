@@ -470,14 +470,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-21
+                    2021-07-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    464
+                    471
                 </div>
                 
 
@@ -512,7 +512,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="npm-ERR-errno-126"><a href="#npm-ERR-errno-126" class="headerlink" title="npm ERR! errno 126"></a>npm ERR! errno 126</h2><h3 id="错误描述："><a href="#错误描述：" class="headerlink" title="错误描述："></a>错误描述：</h3><p>移植前端项目到linux进行部署时，由于在window进行过<code>npm install</code>，再到linux中进行build发生错误如下：</p>
+                <h2 id="npm-ERR-errno-126"><a href="#npm-ERR-errno-126" class="headerlink" title="npm ERR! errno 126"></a>npm ERR! errno 126</h2><p>Date：2021-07-20</p>
+<h3 id="错误描述："><a href="#错误描述：" class="headerlink" title="错误描述："></a>错误描述：</h3><p>移植前端项目到linux进行部署时，由于在window进行过<code>npm install</code>，再到linux中进行build发生错误如下：</p>
 <p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210720092434.png" alt="image-20210720092427641"></p>
 <h3 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h3><p>cd到项目目录下，执行以下命令：</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">rm -rf node_moudles
@@ -521,7 +522,8 @@ npm cache clear --force<span aria-hidden="true" class="line-numbers-rows"><span>
 
 <p>然后再执行<code>npm install</code>，就可以进行<code>build</code>了</p>
 <hr>
-<h2 id="报错Exception-in-thread-“main”-java-lang-AbstractMethodError"><a href="#报错Exception-in-thread-“main”-java-lang-AbstractMethodError" class="headerlink" title="报错Exception in thread “main” java.lang.AbstractMethodError:"></a>报错Exception in thread “main” java.lang.AbstractMethodError:</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>在进行<code>SpringBoot</code>整合<code>Dubbo</code>的时候，导入<code>SpringBoot</code>为最新版本，<code>dubbo</code>的启动器版本依赖为阿里巴巴库中的<code>dubbo-spring-boot-starter 0.2.0</code>，这个dubbo启动器中含有的spring-context版本为4.x.x版本，与最新版的<code>SpringBoot</code>中带有的5.x.x版本发生冲突，导致出现该异常。</p>
+<h2 id="报错Exception-in-thread-“main”-java-lang-AbstractMethodError"><a href="#报错Exception-in-thread-“main”-java-lang-AbstractMethodError" class="headerlink" title="报错Exception in thread “main” java.lang.AbstractMethodError:"></a>报错Exception in thread “main” java.lang.AbstractMethodError:</h2><p>Date：2021-07-21</p>
+<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>在进行<code>SpringBoot</code>整合<code>Dubbo</code>的时候，导入<code>SpringBoot</code>为最新版本，<code>dubbo</code>的启动器版本依赖为阿里巴巴库中的<code>dubbo-spring-boot-starter 0.2.0</code>，这个dubbo启动器中含有的spring-context版本为4.x.x版本，与最新版的<code>SpringBoot</code>中带有的5.x.x版本发生冲突，导致出现该异常。</p>
 <p>整了一天终于能跑了，草(</p>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>在<code>pom.xml</code>导入依赖时，将<code>dubbo-spring-boot-starter 0.2.0</code>中发生冲突的依赖去除</p>
 <pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token comment">&lt;!-- 引入spring-boot-starter以及dubbo和curator的依赖 --&gt;</span>
@@ -997,7 +999,7 @@ npm cache clear --force<span aria-hidden="true" class="line-numbers-rows"><span>
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">68k</span>
+                        class="white-color">73k</span>
             
             
             
