@@ -481,14 +481,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5k
+                    5.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    19 分
+                    20 分
                 </div>
                 
 
@@ -605,6 +605,7 @@
 <p>可以设想，在不同的组织、不同的发展阶段，未来以 Dubbo 构建的微服务将会允许有三种部署架构：传统 SDK、基于 Sidecar 的 Service Mesh、脱离 Sidecar 的 Proxyless Mesh。基于 Sidecar 的 Service Mesh，即经典的 Mesh 架构，独立的 sidecar 运行时接管所有的流量，脱离 Sidecar 的 Proxyless Mesh，富 SDK 直接通过 xDS 与控制面通信。Dubbo 微服务允许部署在物理机、容器、Kubernetes 平台之上，能做到以 Admin 为控制面，以统一的流量治理规则进行治理。</p>
 <hr>
 <h1 id="使用过程记录"><a href="#使用过程记录" class="headerlink" title="使用过程记录"></a>使用过程记录</h1><hr>
+<p>与官方的README中的使用步骤略有不同，可以参阅官方github库的中文dubbo-spring-boot-project/README_CN](<a target="_blank" rel="noopener" href="https://github.com/apache/dubbo-spring-boot-project/blob/master/README_CN.md">https://github.com/apache/dubbo-spring-boot-project/blob/master/README_CN.md</a>)</p>
 <h2 id="1-新建项目"><a href="#1-新建项目" class="headerlink" title="1. 新建项目"></a>1. 新建项目</h2><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210722193458.png" alt="image-20210722193451237" style="zoom: 33%;">
 
 <img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210722193646.png" alt="image-20210722193646138" style="zoom: 50%;">
@@ -862,6 +863,10 @@
 <h2 id="运行消费者服务"><a href="#运行消费者服务" class="headerlink" title="运行消费者服务"></a>运行消费者服务</h2><p>进入ConsumerApplication点击运行</p>
 <h2 id="进入浏览器测试"><a href="#进入浏览器测试" class="headerlink" title="进入浏览器测试"></a>进入浏览器测试</h2><p>在浏览器地址栏输入 <a target="_blank" rel="noopener" href="http://localhost:8083/user">http://localhost:8083/user</a> 进行测试，结果如下：</p>
 <p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210723162028.png" alt="image-20210723162028423"></p>
+<h2 id="顺带一提："><a href="#顺带一提：" class="headerlink" title="顺带一提："></a>顺带一提：</h2><blockquote>
+<p>目前dubbo3.x才发布不久，通过官方的文档可以看到做了不少的优化。</p>
+<p>但当前的dubbo-admin还没有加入对dubbo3.x的支持，无法通过dubbo-admin来查看和测试dubbo的元数据</p>
+</blockquote>
 <hr>
 <h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p><code>dubbo3.0</code>配合<code>SpringBoot</code>及<code>zk</code>的基本使用步骤就是以上这些，和2.x版本在SpringBoot中的使用没有太大区别，相比较<code>SSM</code>中的配置来说相当简便了，非常需要注意的是导入依赖时各个依赖中可能会存在包的冲突问题。</p>
 <p>笔者在使用老版本的<code>Dubbo</code>配合最新的<code>SpringBoot</code>稳定版时，就因为老版本包含的<code>4.x</code>版本<code>spring-context</code>与<code>SpringBoot 2.5.2 </code>中包含的<code>5.x</code>版本的<code>spring-context</code>发生冲突报错折腾了不少时间，本文中的dubbo使用的版本在测试时非常新，包含的spring依赖模块也是较新的版本，没有发生冲突问题。所以在运行程序之前最好排查下导入的依赖集合中是否含有相互冲突的重复依赖，通过<code>&lt;exclusion&gt;</code>来去除一些老旧的依赖，或者降低一些依赖集合的使用版本。</p>
@@ -1314,7 +1319,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">73k</span>
+                        class="white-color">73.1k</span>
             
             
             
