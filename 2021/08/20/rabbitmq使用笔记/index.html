@@ -486,14 +486,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-21
+                    2021-08-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.7k
+                    3.9k
                 </div>
                 
 
@@ -1268,6 +1268,11 @@
 <p>虽然是实现了断点续传，但可以看到重启后数据是直接一次性更新到最新的记录，也就是在控制台直接打印了一大串消息，这样会不会造成服务器刚启动就负载过大呢？</p>
 <p>当然，消息队列本身的设计就是为了解决这类问题的，可能只是此时我初学，对RabbitMQ认识还不够深入，所以才会有这种顾虑吧。</p>
 </blockquote>
+<blockquote>
+<p>2021.08.21  00:32</p>
+<p>虽然本文补充到ACK部分也就在几个小时前，我的一位朋友老王阅读本博文时看到我上面的想的那些问题，进行了相关搜索，找到一篇解决方案：[RabbitMQ 消费端的限流策略](<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903773026926605">RabbitMQ 消费端的限流策略 (juejin.cn)</a>)</p>
+<p>和我有同样看法的读者可以去参考这篇博客。本博文底下该限流策略博文链接的评论即是老王提供的，感谢老王的支持。</p>
+</blockquote>
 </li>
 </ul>
 <p><strong>关于autoDelete：</strong></p>
@@ -1793,7 +1798,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">163.8k</span>
+                        class="white-color">163.9k</span>
             
             
             
