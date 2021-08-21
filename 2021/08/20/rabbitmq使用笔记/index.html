@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="RabbitMQ初级使用配置笔记, 学习笔记,个人博客,ScrH0052">
+    <meta name="keywords" content="RabbitMQ使用配置及学习思考笔记, 学习笔记,个人博客,ScrH0052">
     <meta name="description" content="ScrH0052利用hexo框架搭建的个人学习记录博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>RabbitMQ初级使用配置笔记 | ScrH0052</title>
+    <title>RabbitMQ使用配置及学习思考笔记 | ScrH0052</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/scrh0052/scrh0052.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/scrh0052/scrh0052.github.io/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/scrh0052/scrh0052.github.io/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/scrh0052/scrh0052.github.io/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">RabbitMQ初级使用配置笔记</h1>
+                    <h1 class="description center-align post-title">RabbitMQ使用配置及学习思考笔记</h1>
                 </div>
             </div>
         </div>
@@ -493,14 +493,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.9k
+                    4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    17 分
+                    18 分
                 </div>
                 
 
@@ -1266,7 +1266,8 @@
 <li><p>ScrH0052 个人对这个测试的一些看法和猜测：</p>
 <blockquote>
 <p>虽然是实现了断点续传，但可以看到重启后数据是直接一次性更新到最新的记录，也就是在控制台直接打印了一大串消息，这样会不会造成服务器刚启动就负载过大呢？</p>
-<p>当然，消息队列本身的设计就是为了解决这类问题的，可能只是此时我初学，对RabbitMQ认识还不够深入，所以才会有这种顾虑吧。</p>
+<p>由于目前（2021.08.20）我才初步学习完rabbitmq的基本使用，所以并不知道RabbitMQ是否默认包含应对该情况的策略。我个人的想法是，RabbitMQ应当有个配置能够对消息队列的信道设置流量限制，这样就不会造成突然负载过大了。</p>
+<p>当然，消息队列本身的设计就是为了解决这类高并发问题的，可能只是此时我初学，对RabbitMQ认识还不够深入，所以才会有这种顾虑吧。</p>
 </blockquote>
 <blockquote>
 <p>2021.08.21  00:32</p>
@@ -1451,9 +1452,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/scrh0052/scrh0052.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="RabbitMQ初级使用配置笔记">
+                        <img src="https://cdn.jsdelivr.net/gh/scrh0052/scrh0052.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="RabbitMQ使用配置及学习思考笔记">
                         
-                        <span class="card-title">RabbitMQ初级使用配置笔记</span>
+                        <span class="card-title">RabbitMQ使用配置及学习思考笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1798,7 +1799,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">163.9k</span>
+                        class="white-color">164k</span>
             
             
             
