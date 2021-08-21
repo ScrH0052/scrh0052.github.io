@@ -486,21 +486,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-20
+                    2021-08-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.8k
+                    3.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    13 分
+                    17 分
                 </div>
                 
 
@@ -1240,6 +1240,81 @@
 <p>消费者端控制台打印结果：</p>
 <p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210820225143.png" alt="image-20210820225143329"></p>
 <p>可以看到，sender中只执行了一次，没有指定路由键，而两个消费者端都被调用了</p>
+<hr>
+<h1 id="RabbitMQ-高级"><a href="#RabbitMQ-高级" class="headerlink" title="RabbitMQ 高级"></a>RabbitMQ 高级</h1><hr>
+<h2 id="1-持久化"><a href="#1-持久化" class="headerlink" title="1. 持久化"></a>1. 持久化</h2><p>​    消息的可靠性是RabbitMQ的一大特色，RabbitMQ是通过消息的持久化来实现这一点的。</p>
+<p>以之前的 <code>DirectExchange</code>为例：</p>
+<ul>
+<li><p>将消费者的队列注解中<code>autoDelete</code>属性置为<code>false</code></p>
+</li>
+<li><p>测试代码改为如下</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InterruptedException</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sender<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"啦啦啦"</span><span class="token operator">+</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>先启动消费者，再启动测试，运行一段时间后关闭（测试仍在运行），控制台打印如下：</p>
+<p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210821163633.png" alt="image-20210821163633273"></p>
+</li>
+<li><p>将消费者端的服务重新启动，消费者端控制台打印输出如下：</p>
+<p><img src="https://gitee.com/scrh0052/pic-go-repo/raw/master/img/20210821163811.png" alt="image-20210821163811001"></p>
+</li>
+<li><p>可以看到，重启前最后一个执行的是12，在停止消费者端服务一段时间后，再次重启消费者端时，会从上次停止的地方继续开始，这样就实现了数据的持久化，从而一定程度上避免数据的丢失。</p>
+</li>
+<li><p>ScrH0052 个人对这个测试的一些看法和猜测：</p>
+<blockquote>
+<p>虽然是实现了断点续传，但可以看到重启后数据是直接一次性更新到最新的记录，也就是在控制台直接打印了一大串消息，这样会不会造成服务器刚启动就负载过大呢？</p>
+<p>当然，消息队列本身的设计就是为了解决这类问题的，可能只是此时我初学，对RabbitMQ认识还不够深入，所以才会有这种顾虑吧。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>关于autoDelete：</strong></p>
+<ol>
+<li><p>在<code>@Queue</code> 中:当所有消费者客户端连接断开后，是否自动删除队列</p>
+<p><code>true</code>: 自动删除    ， <code>false</code>: 不自动删除</p>
+</li>
+<li><p>在<code>@Exchange</code> 中:当所有绑定队列不在被使用时，是否自动删除交换器</p>
+<p><code>true</code>: 自动删除    ， <code>false</code>: 不自动删除</p>
+</li>
+</ol>
+<h2 id="2-ACK-Acknowledge-Character-确认机制"><a href="#2-ACK-Acknowledge-Character-确认机制" class="headerlink" title="2.ACK (Acknowledge Character)确认机制"></a>2.ACK (Acknowledge Character)确认机制</h2><ul>
+<li><p>什么是ACK：</p>
+<p>​    如果消息在处理过程中，消费者的服务器在处理消息时发生了异常，可能这条正在被处理的消息就没有成功完成应当有的消息消费，但数据却已经丢失。比如发送短信失败时，不会重新进行发送。</p>
+<p>​    为了避免这种情况，RabbitMQ 支持消息确认机制–ACK。</p>
+<p>​    ACK并不是RabbitMQ特有的，而是http协议中包含的。</p>
+</li>
+<li><p>ACK消息确认机制：</p>
+<ol>
+<li>如果一个消费者在处理消息时出现了网络不稳定，服务器异常等情况，会将消息重新放入队列中，并不断重新向消费者端发送这条消息，直到这条消息得到正确的处理。</li>
+<li>如果在集群情况下，RabbitMQ会立即将这个消息推送给集群中的其他消费者，这种机制保障了消费者在服务端故障的时候不会丢失任何数据和任务。</li>
+<li>只有当消息得到成功处理时，消费者端向RabbitMQ发送一个处理成功的反馈，RabbitMQ接收到反馈之后，消息队列中的这条消息才会被删除。</li>
+<li>在RabbitMQ中，消息的ACK机制默认是打开的。</li>
+</ol>
+</li>
+</ul>
+<p><strong>ACK 的注意事项：</strong></p>
+<p>​    如果忘记配置ACK的最大重试次数，会出现比较严重的后果。当消费者退出时，消息（Message）会一直重复分发消息，这就会导致RabbitMQ占用的内存越来越大，而RabbitMQ一般情况需要长时间运行，因此产生的内存泄漏问题是致命的。所以一般会设置重复次数来防止这个问题。在Consumer的applic.yml中添加以下参数：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span> 
+	<span class="token key atrule">rabbitmq</span><span class="token punctuation">:</span>
+		<span class="token key atrule">listener</span><span class="token punctuation">:</span>
+			<span class="token key atrule">simple</span><span class="token punctuation">:</span>
+				<span class="token comment"># 确认模式，默认自动配置，一般使用默认的就行了，需要开启手动时再进行配置 </span>
+				<span class="token comment">#NONE:不确认，AUTO:自动确认，MANUAL：手动确认</span>
+				<span class="token key atrule">acknowlage-moudle</span><span class="token punctuation">:</span> AUTO 
+				<span class="token key atrule">retry</span><span class="token punctuation">:</span>
+					<span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+					<span class="token key atrule">max-attempts</span><span class="token punctuation">:</span> <span class="token number">5</span> <span class="token comment">#最大重试5次</span>
+					<span class="token key atrule">initial-interval</span><span class="token punctuation">:</span> <span class="token number">3000</span> <span class="token comment">#重试间隔时间（毫秒）</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+<hr>
 <h1 id="面试点："><a href="#面试点：" class="headerlink" title="面试点："></a>面试点：</h1><hr>
 <h2 id="RabbitMQ为什么要用信道而不是TCP直连"><a href="#RabbitMQ为什么要用信道而不是TCP直连" class="headerlink" title="RabbitMQ为什么要用信道而不是TCP直连"></a>RabbitMQ为什么要用信道而不是TCP直连</h2><ol>
 <li>TCP的创建和销毁开销大，创建需要3次握手，销毁需要4次分手；</li>
@@ -1718,7 +1793,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">162.8k</span>
+                        class="white-color">163.8k</span>
             
             
             
